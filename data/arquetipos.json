@@ -1,0 +1,862 @@
+{
+  "archetypes": [
+    {
+      "name": "Puro / The Innocent",
+      "description": {
+        "pt": "Representa a pureza, a inocência, a confiança e a simplicidade. Pessoas influenciadas por este arquétipo veem o mundo com olhos desprovidos de cinismo, mantendo uma confiança genuína nas intenções das pessoas e na bondade da vida.",
+        "en": "Represents purity, innocence, trust, and simplicity. People influenced by this archetype see the world with eyes free of cynicism, maintaining genuine trust in people's intentions and the goodness of life."
+      },
+      "light": {
+        "pt": "Inspiração sincera e alegria de viver que contagia os outros.",
+        "en": "Sincere inspiration and joy of living that contagia others."
+      },
+      "shadow": {
+        "pt": "Ingenuidade excessiva que leva a decepções e evasão de responsabilidades.",
+        "en": "Excessive naivety leading to disappointments and evasion of responsibilities."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu vejo o mundo com otimismo e confiança nas pessoas ao meu redor.",
+            "en": "I see the world with optimism and trust in the people around me."
+          },
+          {
+            "pt": "Encontro alegria nas coisas simples da vida sem complicações.",
+            "en": "I find joy in life's simple things without complications."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu confio plenamente na bondade das pessoas e na vida.",
+              "en": "I fully trust in people's goodness and life."
+            },
+            "B": {
+              "pt": "Eu sou cauteloso com as intenções das pessoas e situações.",
+              "en": "I am cautious with people's intentions and situations."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mago / The Magician",
+      "description": {
+        "pt": "O Mago busca o conhecimento, a transformação e a manifestação dos desejos. Representa a iniciativa, a magia pessoal e a capacidade de criar a própria realidade.",
+        "en": "The Magician seeks knowledge, transformation, and manifestation of desires. Represents initiative, personal magic, and the ability to create one's own reality."
+      },
+      "light": {
+        "pt": "Iniciativa criativa e poder de influenciar positivamente o mundo.",
+        "en": "Creative initiative and power to positively influence the world."
+      },
+      "shadow": {
+        "pt": "Manipulação e desejo excessivo de controle sobre os eventos.",
+        "en": "Manipulation and excessive desire for control over events."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu sinto que posso manifestar minhas ideias no mundo real.",
+            "en": "I feel I can manifest my ideas in the real world."
+          },
+          {
+            "pt": "Gosto de explorar o desconhecido e transformar desafios em oportunidades.",
+            "en": "I like to explore the unknown and turn challenges into opportunities."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu crio minha realidade através de ações ousadas.",
+              "en": "I create my reality through bold actions."
+            },
+            "B": {
+              "pt": "Eu observo e planejo antes de agir para manifestar.",
+              "en": "I observe and plan before acting to manifest."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sacerdotisa / The Priestess",
+      "description": {
+        "pt": "Encarnando o sagrado feminino, a Sacerdotisa está ligada à intuição, ao mistério e à conexão com o inconsciente. Representa a capacidade de acessar o conhecimento profundo e espiritual.",
+        "en": "Embodying the sacred feminine, the Priestess is linked to intuition, mystery, and connection to the unconscious. Represents the ability to access deep and spiritual knowledge."
+      },
+      "light": {
+        "pt": "Intuição profunda e conexão espiritual que guia decisões sábias.",
+        "en": "Deep intuition and spiritual connection that guides wise decisions."
+      },
+      "shadow": {
+        "pt": "Segredos guardados e isolamento emocional do mundo exterior.",
+        "en": "Guarded secrets and emotional isolation from the outside world."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu confio na minha intuição para acessar verdades ocultas.",
+            "en": "I trust my intuition to access hidden truths."
+          },
+          {
+            "pt": "Sinto uma conexão forte com o mistério e o espiritual.",
+            "en": "I feel a strong connection to mystery and the spiritual."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu sigo o fluxo da intuição sem questionar.",
+              "en": "I follow the flow of intuition without questioning."
+            },
+            "B": {
+              "pt": "Eu busco evidências lógicas antes de confiar na intuição.",
+              "en": "I seek logical evidence before trusting intuition."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mãe / The Mother",
+      "description": {
+        "pt": "Personificando a maternidade, a nutrição e a criatividade, a Mãe representa o instinto de cuidar, proteger e nutrir.",
+        "en": "Personifying motherhood, nutrition, and creativity, the Mother represents the instinct to care, protect, and nurture."
+      },
+      "light": {
+        "pt": "Nutrição generosa e apoio emocional incondicional.",
+        "en": "Generous nutrition and unconditional emotional support."
+      },
+      "shadow": {
+        "pt": "Superproteção que sufoca a independência alheia.",
+        "en": "Overprotection that suffocates others' independence."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu sinto um instinto natural de cuidar e nutrir os outros.",
+            "en": "I feel a natural instinct to care for and nurture others."
+          },
+          {
+            "pt": "Encontro alegria em criar e proteger o que amo.",
+            "en": "I find joy in creating and protecting what I love."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu dou sem esperar nada em troca.",
+              "en": "I give without expecting anything in return."
+            },
+            "B": {
+              "pt": "Eu equilibro o dar com o receber para manter o equilíbrio.",
+              "en": "I balance giving with receiving to maintain balance."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Líder / The Leader",
+      "description": {
+        "pt": "O Líder possui a habilidade de conduzir, inspirar e motivar os outros com visão e coragem.",
+        "en": "The Leader has the ability to lead, inspire, and motivate others with vision and courage."
+      },
+      "light": {
+        "pt": "Visão estratégica e capacidade de unir pessoas para objetivos comuns.",
+        "en": "Strategic vision and ability to unite people for common goals."
+      },
+      "shadow": {
+        "pt": "Autoritarismo e imposição de vontades sem considerar o grupo.",
+        "en": "Authoritarianism and imposition of wills without considering the group."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu me sinto natural em liderar e inspirar equipes.",
+            "en": "I feel natural leading and inspiring teams."
+          },
+          {
+            "pt": "Tenho uma visão clara para guiar decisões importantes.",
+            "en": "I have a clear vision to guide important decisions."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu tomo decisões firmes para o bem do grupo.",
+              "en": "I make firm decisions for the group's good."
+            },
+            "B": {
+              "pt": "Eu consulto o grupo antes de decidir.",
+              "en": "I consult the group before deciding."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mestre / The Master",
+      "description": {
+        "pt": "O Mestre é um buscador do divino que compartilha conhecimento e sabedoria adquirida.",
+        "en": "The Master is a seeker of the divine who shares acquired knowledge and wisdom."
+      },
+      "light": {
+        "pt": "Sabedoria compartilhada e orientação espiritual para o crescimento alheio.",
+        "en": "Shared wisdom and spiritual guidance for others' growth."
+      },
+      "shadow": {
+        "pt": "Dogmatismo e imposição de crenças como verdades absolutas.",
+        "en": "Dogmatism and imposition of beliefs as absolute truths."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu gosto de ensinar e compartilhar meu conhecimento com os outros.",
+            "en": "I like to teach and share my knowledge with others."
+          },
+          {
+            "pt": "Sinto uma conexão profunda com o divino e o espiritual.",
+            "en": "I feel a deep connection to the divine and spiritual."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu guio outros com minha sabedoria acumulada.",
+              "en": "I guide others with my accumulated wisdom."
+            },
+            "B": {
+              "pt": "Eu aprendo com os outros tanto quanto ensino.",
+              "en": "I learn from others as much as I teach."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Amante / The Lover",
+      "description": {
+        "pt": "O Amante é movido pelo amor e pela paixão, buscando conexão profunda com os outros.",
+        "en": "The Lover is driven by love and passion, seeking deep connection with others."
+      },
+      "light": {
+        "pt": "Paixão vital e admiração pela beleza da vida e das relações.",
+        "en": "Vital passion and admiration for life's beauty and relationships."
+      },
+      "shadow": {
+        "pt": "Codependência e idealização excessiva que leva a sofrimento.",
+        "en": "Codependency and excessive idealization leading to suffering."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu busco conexões profundas e apaixonadas em minhas relações.",
+            "en": "I seek deep and passionate connections in my relationships."
+          },
+          {
+            "pt": "Sinto uma admiração intensa pela beleza e pelo amor.",
+            "en": "I feel intense admiration for beauty and love."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu me entrego completamente ao amor e à paixão.",
+              "en": "I surrender completely to love and passion."
+            },
+            "B": {
+              "pt": "Eu mantenho equilíbrio entre amor e independência.",
+              "en": "I maintain balance between love and independence."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Herói / The Hero",
+      "description": {
+        "pt": "O Herói embarca em jornadas heróicas, enfrentando desafios com coragem e determinação.",
+        "en": "The Hero embarks on heroic journeys, facing challenges with courage and determination."
+      },
+      "light": {
+        "pt": "Resiliência e inspiração para iluminar o caminho dos outros.",
+        "en": "Resilience and inspiration to light the way for others."
+      },
+      "shadow": {
+        "pt": "Heroísmo excessivo que leva a exaustão e isolamento.",
+        "en": "Excessive heroism leading to exhaustion and isolation."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu enfrento desafios com coragem e determinação.",
+            "en": "I face challenges with courage and determination."
+          },
+          {
+            "pt": "Sinto prazer em superar adversidades e ajudar os outros.",
+            "en": "I take pleasure in overcoming adversities and helping others."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu avanço sozinho para conquistar meus objetivos.",
+              "en": "I advance alone to conquer my goals."
+            },
+            "B": {
+              "pt": "Eu busco aliados para compartilhar a jornada.",
+              "en": "I seek allies to share the journey."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Justo / The Just",
+      "description": {
+        "pt": "O Justo busca o que é certo e justo, defendendo a ordem e corrigindo injustiças.",
+        "en": "The Just seeks what is right and fair, defending order and correcting injustices."
+      },
+      "light": {
+        "pt": "Integridade e defesa dos vulneráveis com equilíbrio.",
+        "en": "Integrity and defense of the vulnerable with balance."
+      },
+      "shadow": {
+        "pt": "Rigidez moral que leva a julgamentos severos.",
+        "en": "Moral rigidity leading to severe judgments."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu defendo a justiça e o equilíbrio em todas as situações.",
+            "en": "I defend justice and balance in all situations."
+          },
+          {
+            "pt": "Sinto um impulso para corrigir injustiças ao meu redor.",
+            "en": "I feel an impulse to correct injustices around me."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu aplico a lei estritamente para manter a ordem.",
+              "en": "I apply the law strictly to maintain order."
+            },
+            "B": {
+              "pt": "Eu considero o contexto humano na aplicação da justiça.",
+              "en": "I consider the human context in applying justice."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sábio / The Sage",
+      "description": {
+        "pt": "O Sábio acumulou sabedoria através de experiências, tornando-se uma fonte de orientação.",
+        "en": "The Sage has accumulated wisdom through experiences, becoming a source of guidance."
+      },
+      "light": {
+        "pt": "Sabedoria profunda e orientação humilde para o crescimento.",
+        "en": "Deep wisdom and humble guidance for growth."
+      },
+      "shadow": {
+        "pt": "Cinismo e isolamento que bloqueia novas aprendizes.",
+        "en": "Cynicism and isolation that blocks new learning."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu reflito sobre minhas experiências para ganhar clareza.",
+            "en": "I reflect on my experiences to gain clarity."
+          },
+          {
+            "pt": "Ofereço orientação baseada em lições aprendidas na vida.",
+            "en": "I offer guidance based on life lessons learned."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu busco solitude para refletir e aprender.",
+              "en": "I seek solitude to reflect and learn."
+            },
+            "B": {
+              "pt": "Eu compartilho minha sabedoria em interações sociais.",
+              "en": "I share my wisdom in social interactions."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Afortunado / The Fortunate",
+      "description": {
+        "pt": "Representa a bem-aventurança, a sorte e as oportunidades de sucesso que surgem na vida.",
+        "en": "Represents blessedness, luck, and opportunities for success that arise in life."
+      },
+      "light": {
+        "pt": "Otimismo que atrai prosperidade e boas vibrações.",
+        "en": "Optimism that attracts prosperity and good vibrations."
+      },
+      "shadow": {
+        "pt": "Dependência da sorte em vez de ação proativa.",
+        "en": "Dependence on luck instead of proactive action."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu atraio oportunidades positivas e sinto sorte na vida.",
+            "en": "I attract positive opportunities and feel lucky in life."
+          },
+          {
+            "pt": "Mantenho uma atitude de gratidão pelas boas coisas que acontecem.",
+            "en": "I maintain an attitude of gratitude for the good things that happen."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu confio na sorte para guiar meus caminhos.",
+              "en": "I trust luck to guide my paths."
+            },
+            "B": {
+              "pt": "Eu crio minhas oportunidades através de esforço.",
+              "en": "I create my opportunities through effort."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Coragem / The Courage",
+      "description": {
+        "pt": "Possui a força para dominar instintos, integrar a sombra e se tornar mestre da própria vida.",
+        "en": "Possesses the strength to master instincts, integrate the shadow, and become master of one's own life."
+      },
+      "light": {
+        "pt": "Bravura equilibrada e domínio emocional resiliente.",
+        "en": "Balanced bravery and resilient emotional mastery."
+      },
+      "shadow": {
+        "pt": "Impulsividade ou medo que paralisa a ação.",
+        "en": "Impulsivity or fear that paralyzes action."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu enfrento medos com coragem e paciência.",
+            "en": "I face fears with courage and patience."
+          },
+          {
+            "pt": "Integro minhas emoções fortes para crescer.",
+            "en": "I integrate my strong emotions to grow."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu domino desafios com força interior suave.",
+              "en": "I master challenges with gentle inner strength."
+            },
+            "B": {
+              "pt": "Eu uso força direta para superar obstáculos.",
+              "en": "I use direct force to overcome obstacles."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Rebelde / The Rebel",
+      "description": {
+        "pt": "O Rebelde desafia normas e convenções para criar mudanças significativas.",
+        "en": "The Rebel challenges norms and conventions to create meaningful changes."
+      },
+      "light": {
+        "pt": "Inovação transformadora e liberdade autêntica.",
+        "en": "Transformative innovation and authentic freedom."
+      },
+      "shadow": {
+        "pt": "Rebelião destrutiva sem propósito construtivo.",
+        "en": "Destructive rebellion without constructive purpose."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu questiono autoridades e normas para promover mudanças.",
+            "en": "I question authorities and norms to promote changes."
+          },
+          {
+            "pt": "Sinto necessidade de liberdade para expressar minha visão única.",
+            "en": "I feel a need for freedom to express my unique vision."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu rompo regras para inovar e evoluir.",
+              "en": "I break rules to innovate and evolve."
+            },
+            "B": {
+              "pt": "Eu reformo regras existentes para melhorias.",
+              "en": "I reform existing rules for improvements."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Revolucionário / The Revolutionary",
+      "description": {
+        "pt": "O Revolucionário elimina o que não serve e inicia novas jornadas com sabedoria.",
+        "en": "The Revolutionary eliminates what no longer serves and starts new journeys with wisdom."
+      },
+      "light": {
+        "pt": "Transformação radical e renovação consciente.",
+        "en": "Radical transformation and conscious renewal."
+      },
+      "shadow": {
+        "pt": "Destruição impulsiva sem visão de reconstrução.",
+        "en": "Impulsive destruction without vision of reconstruction."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu libero o velho para abraçar transformações profundas.",
+            "en": "I release the old to embrace deep transformations."
+          },
+          {
+            "pt": "Sinto empolgação em encerrar ciclos e começar novos.",
+            "en": "I feel excitement in ending cycles and starting new ones."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu derrubo estruturas obsoletas imediatamente.",
+              "en": "I tear down obsolete structures immediately."
+            },
+            "B": {
+              "pt": "Eu planejo a transição para uma renovação suave.",
+              "en": "I plan the transition for a smooth renewal."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mediador / The Mediator",
+      "description": {
+        "pt": "O Mediador harmoniza pessoas e situações, buscando paz e cooperação.",
+        "en": "The Mediator harmonizes people and situations, seeking peace and cooperation."
+      },
+      "light": {
+        "pt": "Equilíbrio diplomático e resolução de conflitos com empatia.",
+        "en": "Diplomatic balance and conflict resolution with empathy."
+      },
+      "shadow": {
+        "pt": "Indecisão e evitação de confrontos necessários.",
+        "en": "Indecision and avoidance of necessary confrontations."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu atuo como ponte entre opiniões opostas para harmonizar.",
+            "en": "I act as a bridge between opposing opinions to harmonize."
+          },
+          {
+            "pt": "Priorizo a paz e a cooperação em relações.",
+            "en": "I prioritize peace and cooperation in relationships."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu media conflitos com neutralidade total.",
+              "en": "I mediate conflicts with total neutrality."
+            },
+            "B": {
+              "pt": "Eu media considerando as emoções envolvidas.",
+              "en": "I mediate considering the emotions involved."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Hedonista / The Hedonist",
+      "description": {
+        "pt": "O Hedonista concentra-se em vivenciar prazer através de bens, sexualidade ou diversão.",
+        "en": "The Hedonist focuses on experiencing pleasure through goods, sexuality, or fun."
+      },
+      "light": {
+        "pt": "Apreciação plena da vida e celebração sensorial.",
+        "en": "Full appreciation of life and sensory celebration."
+      },
+      "shadow": {
+        "pt": "Excesso e dependência de prazeres superficiais.",
+        "en": "Excess and dependence on superficial pleasures."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu busco prazer e diversão como forma de viver intensamente.",
+            "en": "I seek pleasure and fun as a way to live intensely."
+          },
+          {
+            "pt": "Encontro equilíbrio entre prazer e responsabilidades.",
+            "en": "I find balance between pleasure and responsibilities."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu priorizo o prazer imediato acima de tudo.",
+              "en": "I prioritize immediate pleasure above all."
+            },
+            "B": {
+              "pt": "Eu equilibro prazer com propósitos maiores.",
+              "en": "I balance pleasure with greater purposes."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Desapego / The Detachment",
+      "description": {
+        "pt": "O Desapego permite se vitimizar ou se libertar de crenças limitantes, abraçando a impermanência.",
+        "en": "The Detachment allows victimization or liberation from limiting beliefs, embracing impermanence."
+      },
+      "light": {
+        "pt": "Liberdade fluida e aceitação da mudança como natural.",
+        "en": "Fluid freedom and acceptance of change as natural."
+      },
+      "shadow": {
+        "pt": "Vitimismo crônico e apego disfarçado de desapego.",
+        "en": "Chronic victimhood and disguised attachment as detachment."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu me desapego facilmente de situações que não servem mais.",
+            "en": "I detach easily from situations that no longer serve."
+          },
+          {
+            "pt": "Aceito a impermanência da vida com serenidade.",
+            "en": "I accept life's impermanence with serenity."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu solto o controle para fluir com as mudanças.",
+              "en": "I let go of control to flow with changes."
+            },
+            "B": {
+              "pt": "Eu me apego ao que é familiar para me sentir seguro.",
+              "en": "I attach to what is familiar to feel safe."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Curador / The Healer",
+      "description": {
+        "pt": "O Curador encontra propósito na cura do mundo através de autodescoberta e transformação.",
+        "en": "The Healer finds purpose in healing the world through self-discovery and transformation."
+      },
+      "light": {
+        "pt": "Empatia transformadora e serviço altruísta ao bem comum.",
+        "en": "Transformative empathy and altruistic service to the common good."
+      },
+      "shadow": {
+        "pt": "Exaustão por absorver dores alheias sem limites.",
+        "en": "Exhaustion from absorbing others' pains without boundaries."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu sinto chamado para curar e transformar a mim e aos outros.",
+            "en": "I feel called to heal and transform myself and others."
+          },
+          {
+            "pt": "Encontro propósito em ajudar na jornada de autodescoberta.",
+            "en": "I find purpose in helping with self-discovery journeys."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu dou minha energia para curar sem reservas.",
+              "en": "I give my energy to heal without reserves."
+            },
+            "B": {
+              "pt": "Eu protejo minha energia enquanto curo.",
+              "en": "I protect my energy while healing."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Artista / The Artist",
+      "description": {
+        "pt": "O Artista é introspectivo, ligado à noite e à intuição, expressando-se através da criatividade.",
+        "en": "The Artist is introspective, linked to night and intuition, expressing through creativity."
+      },
+      "light": {
+        "pt": "Inovação imaginativa e expressão autêntica da alma.",
+        "en": "Imaginative innovation and authentic expression of the soul."
+      },
+      "shadow": {
+        "pt": "Isolamento criativo e desconexão da realidade prática.",
+        "en": "Creative isolation and disconnection from practical reality."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu expresso minha imaginação através de arte ou criação.",
+            "en": "I express my imagination through art or creation."
+          },
+          {
+            "pt": "Sinto inspiração profunda na quietude e na intuição.",
+            "en": "I feel deep inspiration in quietude and intuition."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu mergulho na criação sem limites.",
+              "en": "I dive into creation without limits."
+            },
+            "B": {
+              "pt": "Eu equilibro criação com estrutura prática.",
+              "en": "I balance creation with practical structure."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Luminoso / The Luminous",
+      "description": {
+        "pt": "O Luminoso representa a consciência, o autodescobrimento e a jornada espiritual diária.",
+        "en": "The Luminous represents consciousness, self-discovery, and the daily spiritual journey."
+      },
+      "light": {
+        "pt": "Iluminação interior e paz com o passado para o futuro.",
+        "en": "Inner illumination and peace with the past for the future."
+      },
+      "shadow": {
+        "pt": "Ilusão de iluminação sem integração real.",
+        "en": "Illusion of enlightenment without real integration."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu ilumino meu caminho através de autoconhecimento diário.",
+            "en": "I illuminate my path through daily self-knowledge."
+          },
+          {
+            "pt": "Faço as pazes com meu passado para avançar.",
+            "en": "I make peace with my past to advance."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu busco luz interior em solitude.",
+              "en": "I seek inner light in solitude."
+            },
+            "B": {
+              "pt": "Eu compartilho minha luz com o mundo.",
+              "en": "I share my light with the world."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ressurreição / The Resurrection",
+      "description": {
+        "pt": "A Ressurreição busca espiritualidade e transcendência, aceitando o chamado do divino.",
+        "en": "The Resurrection seeks spirituality and transcendence, accepting the divine call."
+      },
+      "light": {
+        "pt": "Renovação espiritual e resposta ao chamado superior.",
+        "en": "Spiritual renewal and response to the higher call."
+      },
+      "shadow": {
+        "pt": "Resistência ao chamado por medo da mudança.",
+        "en": "Resistance to the call due to fear of change."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu respondo a chamados espirituais para renovação.",
+            "en": "I respond to spiritual calls for renewal."
+          },
+          {
+            "pt": "Sinto um impulso para transcendência e crescimento espiritual.",
+            "en": "I feel an impulse for transcendence and spiritual growth."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu abraço o chamado divino completamente.",
+              "en": "I embrace the divine call completely."
+            },
+            "B": {
+              "pt": "Eu integro o chamado com minha vida cotidiana.",
+              "en": "I integrate the call with my daily life."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Integrado / The Integrated",
+      "description": {
+        "pt": "O Integrado reflete a harmonia entre masculino e feminino, espírito e matéria.",
+        "en": "The Integrated reflects harmony between masculine and feminine, spirit and matter."
+      },
+      "light": {
+        "pt": "Totalidade equilibrada e fluxo harmonioso com a vida.",
+        "en": "Balanced wholeness and harmonious flow with life."
+      },
+      "shadow": {
+        "pt": "Desequilíbrio interno que leva a fragmentação.",
+        "en": "Internal imbalance leading to fragmentation."
+      },
+      "questions": {
+        "likert": [
+          {
+            "pt": "Eu sinto harmonia entre todos os aspectos de mim.",
+            "en": "I feel harmony between all aspects of myself."
+          },
+          {
+            "pt": "Vivo em equilíbrio entre espírito e matéria.",
+            "en": "I live in balance between spirit and matter."
+          }
+        ],
+        "choice": [
+          {
+            "A": {
+              "pt": "Eu integro opostos para totalidade.",
+              "en": "I integrate opposites for wholeness."
+            },
+            "B": {
+              "pt": "Eu equilibro aspectos sem forçar integração.",
+              "en": "I balance aspects without forcing integration."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

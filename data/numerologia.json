@@ -1,0 +1,52 @@
+{
+  "vibracoes": {
+    "1": {
+      "pt": "Líder nato, independente, pioneiro. Energia de iniciativa e originalidade.",
+      "en": "Natural leader, independent, pioneer. Energy of initiative and originality."
+    },
+    "2": {
+      "pt": "Cooperador, sensível, diplomata. Foco em parcerias e harmonia.",
+      "en": "Cooperator, sensitive, diplomat. Focus on partnerships and harmony."
+    },
+    "3": {
+      "pt": "Criativo, expressivo, social. Vibração de alegria e comunicação.",
+      "en": "Creative, expressive, social. Vibration of joy and communication."
+    },
+    "4": {
+      "pt": "Estável, prático, trabalhador. Base sólida e disciplina.",
+      "en": "Stable, practical, worker. Solid base and discipline."
+    },
+    "5": {
+      "pt": "Aventureiro, versátil, livre. Mudanças e liberdade.",
+      "en": "Adventurer, versatile, free. Changes and freedom."
+    },
+    "6": {
+      "pt": "Responsável, amoroso, harmonizador. Família e serviço.",
+      "en": "Responsible, loving, harmonizer. Family and service."
+    },
+    "7": {
+      "pt": "Introspectivo, analítico, espiritual. Busca interior.",
+      "en": "Introspective, analytical, spiritual. Inner search."
+    },
+    "8": {
+      "pt": "Ambicioso, poderoso, material. Sucesso e autoridade.",
+      "en": "Ambitious, powerful, material. Success and authority."
+    },
+    "9": {
+      "pt": "Humanitário, compassivo, universal. Conclusão e sabedoria.",
+      "en": "Humanitarian, compassionate, universal. Completion and wisdom."
+    },
+    "11": {
+      "pt": "Iluminado, intuitivo, visionário. Mestre da inspiração.",
+      "en": "Enlightened, intuitive, visionary. Master of inspiration."
+    }
+  },
+  "ciclos": {
+    "pt": "Ciclos de vida representam fases evolutivas: 1º (formação), 2º (produtividade), 3º (sabedoria).",
+    "en": "Life cycles represent evolutionary phases: 1st (formation), 2nd (productivity), 3rd (wisdom)."
+  },
+  "desafios": {
+    "pt": "Desafios indicam lições a superar para crescimento.",
+    "en": "Challenges indicate lessons to overcome for growth."
+  }
+}
