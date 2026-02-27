@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Decrypt® - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Mesmo estilo do register.html, mas simplificado */
+        body { font-family: 'SF Pro Display', sans-serif; background: linear-gradient(135deg, #000000 0%, #0f0f23 50%, #1a1a2e 100%); color: #c0c0c0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        form { background: rgba(192,192,192,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(112,128,144,0.3); border-radius: 12px; padding: 40px; max-width: 400px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        h1 { text-align: center; color: #d4af37; font-family: 'Cinzel', serif; font-size: 2.5em; margin-bottom: 30px; text-shadow: 0 0 20px rgba(212,175,55,0.5); }
+        label { display: block; margin: 10px 0 5px; color: #c0c0c0; font-weight: 400; }
+        input { width: 100%; padding: 12px; border: 1px solid rgba(112,128,144,0.3); border-radius: 8px; background: rgba(192,192,192,0.05); color: #c0c0c0; box-sizing: border-box; }
+        input:focus { outline: none; border-color: #d4af37; }
+        button { width: 100%; padding: 15px; background: #4b0082; color: #c0c0c0; border: none; border-radius: 8px; font-size: 1em; cursor: pointer; transition: background 0.3s; margin-top: 20px; }
+        button:hover { background: #d4af37; color: #000; }
+        .flash { padding: 10px; margin-bottom: 20px; border-radius: 8px; text-align: center; }
+        .flash.error { background: rgba(220,53,69,0.2); color: #dc3545; }
+        a { color: #d4af37; text-decoration: none; text-align: center; display: block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h1>Self Decrypt®</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {{ form.hidden_tag() }}
+        <label>{{ form.username.label }}</label>
+        {{ form.username(class="form-control") }}
+        <label>{{ form.password.label }}</label>
+        {{ form.password(class="form-control") }}
+        {{ form.submit() }}
+        <a href="{{ url_for('register') }}">Não tem conta? Registre-se</a>
+    </form>
+</body>
+</html>

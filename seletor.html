@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Decrypt® - Choose Format</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Áudios locais (MP3) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/bg.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="buttonSound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+    <style>
+        :root { --bg-gradient: linear-gradient(135deg, #000000 0%, #0f0f23 50%, #1a1a2e 100%); --glass-bg: rgba(192, 192, 192, 0.05); --glass-border: rgba(112, 128, 144, 0.3); --blur: blur(10px); --accent-purple: #4b0082; --gold-accent: #d4af37; --silver: #c0c0c0; --shadow-deep: 0 8px 32px rgba(0,0,0,0.6); --verde: #28a745; --amarelo: #ffc107; --azul: #007bff; --vermelho: #dc3545; }
+        body { font-family: 'SF Pro Display', system-ui, sans-serif; background: var(--bg-gradient); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 20px; color: var(--silver); overflow: hidden; position: relative; }
+        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 0; opacity: 0.3; }
+        #mandala { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.6); opacity: 0.1; animation: rotate-mandala 20s linear infinite; z-index: 1; }
+        @keyframes rotate-mandala { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.6); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.6); } }
+        h1 { text-align: center; color: var(--gold-accent); font-family: 'Cinzel', serif; font-weight: 700; font-size: 3em; margin-bottom: 10px; text-shadow: 0 0 20px rgba(212,175,55,0.5); z-index: 2; position: relative; animation: glow 2s ease-in-out infinite alternate; }
+        h1::after { content: '®'; font-size: 0.5em; vertical-align: super; }
+        @keyframes glow { from { text-shadow: 0 0 20px rgba(212,175,55,0.5); } to { text-shadow: 0 0 30px rgba(212,175,55,0.8); } }
+        p { text-align: center; color: rgba(192,192,192,0.8); font-size: 1.2em; margin-bottom: 40px; z-index: 2; max-width: 600px; line-height: 1.6; }
+        .formato { display: inline-block; margin: 0 15px; padding: 0; background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 15px; box-shadow: var(--shadow-deep); overflow: hidden; transition: all 0.5s ease-in-out; z-index: 2; position: relative; width: 300px; cursor: pointer; }
+        .formato:hover { transform: translateY(-8px) rotateY(5deg); box-shadow: 0 16px 48px rgba(75,0,130,0.3); border-color: var(--gold-accent); }
+        .formato h3 { margin: 20px 0 10px; padding: 0 20px; color: var(--silver); font-weight: 400; font-size: 1.2em; font-family: 'Cinzel', serif; }
+        .formato p { margin: 0 20px 20px; color: rgba(192,192,192,0.7); font-size: 0.95em; }
+        button { display: block; width: 100%; padding: 15px; background: var(--accent-purple); color: var(--silver); font-family: inherit; font-size: 1em; font-weight: 400; border: none; border-radius: 0 0 15px 15px; cursor: pointer; transition: all 0.5s ease-in-out; position: relative; overflow: hidden; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+        button::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+        button:hover::before { left: 100%; }
+        button:hover { background: var(--gold-accent); color: #000; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); }
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; width: 50px; height: 50px; color: var(--silver); font-size: 1.5em; cursor: pointer; z-index: 10; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <svg id="mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#ffc107" stroke-width="2" />
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#007bff" stroke-width="2" />
+        <circle cx="100" cy="100" r="50" fill="none" stroke="#dc3545" stroke-width="2" />
+        <path d="M100 10 L100 190 M10 100 L190 100" stroke="#28a745" stroke-width="2" />
+        <polygon points="100,20 120,40 100,60 80,40" fill="#ffc107" opacity="0.5" />
+        <polygon points="100,140 80,160 100,180 120,160" fill="#007bff" opacity="0.5" />
+    </svg>
+    <h1>Self Decrypt®</h1>
+    <p>{% if lang == 'en' %}Choose the analysis format to discover your 22 archetypes.{% else %}Escolha o formato de análise para descobrir seus 22 arquétipos.{% endif %}</p>
+    <div class="formato">
+        <h3>{% if lang == 'en' %}Likert Scale (1-5){% else %}Escala Likert (1-5){% endif %}</h3>
+        <p>{% if lang == 'en' %}Respond how much you identify with each intuitive statement.{% else %}Responda o quanto você se identifica com cada afirmação intuitiva.{% endif %}</p>
+        <a href="/questionario/likert?lang={{ lang }}"><button>{% if lang == 'en' %}Start with Likert{% else %}Começar com Likert{% endif %}</button></a>
+    </div>
+    <div class="formato">
+        <h3>{% if lang == 'en' %}Direct Choice (A/B){% else %}Escolha Direta (A/B){% endif %}</h3>
+        <p>{% if lang == 'en' %}Select between two polarities that resonate most with your essence.{% else %}Selecione entre duas polaridades que mais ressoam com sua essência.{% endif %}</p>
+        <a href="/questionario/escolha?lang={{ lang }}"><button>{% if lang == 'en' %}Start with Choice{% else %}Começar com Escolha{% endif %}</button></a>
+    </div>
+    <button id="muteBtn" onclick="toggleMute()">🔊</button>
+    <script>
+        particlesJS('particles-js', {
+            particles: { number: { value: 50 }, color: { value: '#d4af37' }, shape: { type: 'circle' }, opacity: { value: 0.5, anim: { enable: true, speed: 1 } }, size: { value: 3 }, move: { enable: true, speed: 0.5, direction: 'none', random: true, straight: false, out_mode: 'out' } },
+            interactivity: { events: { onhover: { enable: true, mode: 'repulse' } } },
+            retina_detect: true
+        });
+        gsap.from('.formato', { duration: 1.5, y: 50, opacity: 0, stagger: 0.3, ease: 'back.out(1.7)' });
+
+        // JS para sons corrigido
+        let audioUnlocked = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const buttonSound = document.getElementById('buttonSound');
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                bgMusic.volume = 0.2;
+                bgMusic.play().then(() => {
+                    audioUnlocked = true;
+                    console.log('Áudio desbloqueado! Música rodando.');
+                }).catch(e => console.log('Erro no áudio:', e));
+            }
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                unlockAudio();
+                buttonSound.currentTime = 0;
+                buttonSound.volume = 0.5;
+                buttonSound.play().catch(e => console.log('Som de botão bloqueado:', e));
+            }
+        });
+        function toggleMute() {
+            const isMuted = bgMusic.muted;
+            bgMusic.muted = !isMuted;
+            document.getElementById('muteBtn').textContent = isMuted ? '🔊' : '🔇';
+        }
+    </script>
+</body>
+</html>

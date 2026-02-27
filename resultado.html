@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Decrypt® - Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Áudios locais (MP3) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/bg.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="buttonSound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+    <style>
+        :root { --bg-gradient: linear-gradient(135deg, #000000 0%, #0f0f23 50%, #1a1a2e 100%); --glass-bg: rgba(192, 192, 192, 0.05); --glass-border: rgba(112, 128, 144, 0.3); --blur: blur(10px); --accent-purple: #4b0082; --gold-accent: #d4af37; --silver: #c0c0c0; --shadow-deep: 0 4px 20px rgba(0,0,0,0.6); --verde: #28a745; --amarelo: #ffc107; --azul: #007bff; --vermelho: #dc3545; }
+        body { font-family: 'SF Pro Display', system-ui, sans-serif; background: var(--bg-gradient); min-height: 100vh; margin: 0; padding: 20px; color: var(--silver); position: relative; overflow-y: auto; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; opacity: 0.2; }
+        #mandala { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.6); opacity: 0.08; animation: rotate-mandala 25s linear infinite; z-index: 0; }
+        @keyframes rotate-mandala { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.6); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.6); } }
+        h1 { text-align: center; color: var(--gold-accent); font-family: 'Cinzel', serif; font-weight: 700; font-size: 3em; margin-bottom: 10px; text-shadow: 0 0 20px rgba(212,175,55,0.5); letter-spacing: 1px; position: relative; z-index: 1; animation: glow 2s ease-in-out infinite alternate; }
+        h1::after { content: '®'; font-size: 0.5em; vertical-align: super; }
+        @keyframes glow { from { text-shadow: 0 0 20px rgba(212,175,55,0.5); } to { text-shadow: 0 0 30px rgba(212,175,55,0.8); } }
+        p { text-align: center; color: rgba(192,192,192,0.8); font-size: 1.2em; margin-bottom: 40px; line-height: 1.5; z-index: 1; }
+        .boas-vindas { background: rgba(255,255,255,0.05); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; margin: 20px auto; max-width: 800px; padding: 30px; box-shadow: var(--shadow-deep); text-align: center; }
+        .boas-vindas h2 { color: var(--gold-accent); font-family: 'Cinzel', serif; font-size: 1.8em; margin-bottom: 20px; }
+        .boas-vindas p { font-size: 1.1em; line-height: 1.6; margin-bottom: 15px; }
+        .info-user { display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+        .info-item { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; text-align: center; box-shadow: var(--shadow-deep); margin: 10px; min-height: 150px; }
+        .numero-principal { font-size: 2.5em; color: var(--gold-accent); font-family: 'Cinzel', serif; margin-bottom: 10px; }
+        .conteudo-principal { max-width: 900px; margin: 0 auto; padding-bottom: 50px; z-index: 1; position: relative; }
+        .categoria { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; margin: 25px auto; max-width: 600px; padding: 25px; box-shadow: var(--shadow-deep); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 1; position: relative; cursor: pointer; transform-style: preserve-3d; }
+        .categoria:hover { transform: translateY(-5px) rotateX(5deg); box-shadow: 0 12px 40px rgba(75,0,130,0.3); border-color: var(--gold-accent); }
+        .regente { border-left: 4px solid var(--verde); background: rgba(40,167,69,0.1); }
+        .secundarios { border-left: 4px solid var(--amarelo); background: rgba(255,193,7,0.1); }
+        .emergentes { border-left: 4px solid var(--azul); background: rgba(0,123,255,0.1); }
+        .fracos { border-left: 4px solid var(--vermelho); background: rgba(220,53,69,0.1); }
+        .categoria h2 { margin: 0 0 20px; font-weight: 400; color: var(--gold-accent); font-family: 'Cinzel', serif; letter-spacing: 0.5px; font-size: 1.4em; }
+        table { width: 100%; border-collapse: collapse; color: var(--silver); font-size: 1.1em; }
+        th, td { padding: 15px; text-align: left; transition: background 0.3s ease; border-bottom: 1px solid rgba(192,192,192,0.1); }
+        th { background: rgba(192,192,192,0.05); font-weight: 400; color: var(--gold-accent); font-family: 'Cinzel', serif; }
+        tr:hover { background: rgba(75,0,130,0.1); transform: scale(1.01); }
+        .archetype-details { margin: 0; cursor: pointer; list-style: none; }
+        .archetype-details summary { color: var(--gold-accent); font-weight: 600; padding: 8px 0; display: flex; align-items: center; transition: color 0.3s ease; }
+        .archetype-details summary:hover { color: var(--amarelo); }
+        .archetype-details summary::after { content: '▼'; margin-left: 10px; font-size: 0.8em; transition: transform 0.3s ease; }
+        .archetype-details[open] summary::after { transform: rotate(180deg); }
+        .archetype-details details { background: rgba(75,0,130,0.1); border: 1px solid var(--glass-border); border-radius: 8px; padding: 15px; margin-top: 5px; overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; }
+        .archetype-details details p { margin: 5px 0; font-size: 0.95em; line-height: 1.4; color: var(--silver); }
+        .archetype-details details p:first-child { font-weight: 500; color: var(--verde); }
+        .archetype-details details p:last-child { color: var(--vermelho); }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 900px; margin: 20px auto; }
+        .secao { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; text-align: center; box-shadow: var(--shadow-deep); margin: 10px; min-height: 150px; }
+        .secao h3 { color: var(--gold-accent); font-family: 'Cinzel', serif; margin-bottom: 10px; font-size: 1.2em; }
+        .secao ul { list-style: none; padding: 0; text-align: left; }
+        .secao li { margin: 5px 0; color: var(--silver); }
+        #chart-container-archetypes { max-width: 900px; margin: 50px auto; background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-deep); position: relative; z-index: 1; }
+        #chart-container-numerology { max-width: 600px; margin: 20px auto; }
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; width: 50px; height: 50px; color: var(--silver); font-size: 1.5em; cursor: pointer; z-index: 10; }
+        .triangulo-section { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; margin: 50px auto 20px; max-width: 800px; padding: 30px; box-shadow: var(--shadow-deep); text-align: center; z-index: 1; }
+        .triangulo-section h3 { color: var(--gold-accent); font-family: 'Cinzel', serif; margin-bottom: 20px; font-size: 1.5em; }
+        .triangulo-content {font-family: 'Courier New', monospace;font-size: 1.1em;line-height: 1.3;color: var(--silver);white-space: pre-wrap;text-align: center;background: rgba(0,0,0,0.2);padding: 20px;border-radius: 8px;margin: 0 auto;max-width: 100%;overflow-x: auto;letter-spacing: 0;}
+		.triangulo-section div { font-family: 'Courier New', monospace; font-size: 1.2em; line-height: 1.4; color: var(--silver); white-space: pre; }
+        /* Novos estilos para Astrologia Védica */
+        .vedica-section { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; margin: 25px auto; max-width: 900px; padding: 25px; box-shadow: var(--shadow-deep); z-index: 1; position: relative; }
+        .vedica-section h2 { margin: 0 0 20px; font-weight: 400; color: var(--gold-accent); font-family: 'Cinzel', serif; letter-spacing: 0.5px; font-size: 1.6em; text-align: center; }
+        .planetas-table, .casas-table { width: 100%; border-collapse: collapse; color: var(--silver); font-size: 0.95em; margin: 15px 0; }
+        .planetas-table th, .planetas-table td, .casas-table th, .casas-table td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(192,192,192,0.1); }
+        .planetas-table th, .casas-table th { background: rgba(192,192,192,0.05); color: var(--gold-accent); font-family: 'Cinzel', serif; }
+        .vimshottari-section { background: rgba(75,0,130,0.1); border: 1px solid var(--glass-border); border-radius: 8px; padding: 15px; margin: 10px 0; }
+        .dasha-item { margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px; }
+        .flash { padding: 10px; margin-bottom: 20px; border-radius: 8px; text-align: center; }
+        .flash.success { background: rgba(40,167,69,0.2); color: #28a745; }
+        .flash.error { background: rgba(220,53,69,0.2); color: #dc3545; }
+        @media (max-width: 600px) { .categoria { margin: 15px; padding: 20px; } h1 { font-size: 2em; } body { padding: 10px; } .archetype-details details { padding: 10px; } .info-grid { grid-template-columns: 1fr; } .triangulo-section { margin: 30px 10px; padding: 20px; } .vedica-section { margin: 15px; padding: 20px; } .planetas-table, .casas-table { font-size: 0.8em; } }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <svg id="mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#ffc107" stroke-width="2" />
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#007bff" stroke-width="2" />
+        <circle cx="100" cy="100" r="50" fill="none" stroke="#dc3545" stroke-width="2" />
+        <path d="M100 10 L100 190 M10 100 L190 100" stroke="#28a745" stroke-width="2" />
+        <polygon points="100,20 120,40 100,60 80,40" fill="#ffc107" opacity="0.5" />
+        <polygon points="100,140 80,160 100,180 120,160" fill="#007bff" opacity="0.5" />
+    </svg>
+    <h1>Self Decrypt®</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>{% if lang == 'en' %}Your Archetypal, Cabalistic Numerology and Vedic Astrology Report{% else %}Seu Relatório de Arquétipos, Numerologia Cabalística e Astrologia Védica{% endif %}</p>
+    <div class="boas-vindas">
+        <h2>{% if lang == 'en' %}Welcome{% else %}Bem-vindo{% endif %}, {{ current_user.full_name }}</h2>
+        <p>{% if lang == 'en' %}Birth Date: {{ current_user.birth_date }}{% else %}Data de Nascimento: {{ current_user.birth_date }}{% endif %}</p>
+        <p>{% if lang == 'en' %}Age: {{ calcular_idade(current_user.birth_date) }}{% else %}Idade: {{ calcular_idade(current_user.birth_date) }}{% endif %}</p>
+        {% if vedica %}
+        <p>{% if lang == 'en' %}Location: {{ vedica.cidade }} ({{ vedica.latitude }}, {{ vedica.longitude }}){% else %}Localização: {{ vedica.cidade }} ({{ vedica.latitude }}, {{ vedica.longitude }}){% endif %}</p>
+        {% endif %}
+    </div>
+
+    <!-- Seção de Arquétipos -->
+    <div class="conteudo-principal">
+        {% macro display_category(categoria_nome, titulo_en, titulo_pt, cor_emoji) %}
+            {% if categorias[categoria_nome] %}
+            <div class="categoria {{ categoria_nome }}">
+                <h2>{{ cor_emoji }} {% if lang == 'en' %}{{ titulo_en }}{% else %}{{ titulo_pt }}{% endif %}</h2>
+                <table>
+                    <tr><th>{% if lang == 'en' %}Archetype{% else %}Arquétipo{% endif %}</th><th>{% if lang == 'en' %}Score (%){% else %}Pontuação (%){% endif %}</th></tr>
+                    {% for item in categorias[categoria_nome] %}
+                    {% set nome_completo = item[0] %}
+                    {% set score = item[1] %}
+                    <tr>
+                        <td>
+                            <details class="archetype-details">
+                                <summary>{{ nome_completo }}</summary>
+                                <div>
+                                    <p><strong>{% if lang == 'en' %}Description{% else %}Descrição{% endif %}:</strong> {{ arquetipos_full[nome_completo].description[lang] }}</p>
+                                </div>
+                            </details>
+                        </td>
+                        <td>{{ score }}%</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+        {% endmacro %}
+
+        {{ display_category('regente', 'Ruling Archetype', 'Arquétipo Regente', '👑') }}
+        {{ display_category('secundarios', 'Secondary Archetypes', 'Arquétipos Secundários', '⭐') }}
+        {{ display_category('emergentes', 'Emerging Archetypes', 'Arquétipos Emergentes', '🌱') }}
+        {{ display_category('fracos', 'Weak Archetypes', 'Arquétipos Fracos', '⚠️') }}
+    </div>
+
+    <!-- Gráfico de Arquétipos -->
+    <div id="chart-container-archetypes">
+        <canvas id="rankingChart"></canvas>
+    </div>
+
+    <!-- Seção de Numerologia -->
+    <div class="conteudo-principal">
+        <div class="info-grid">
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Expression Number{% else %}Número de Expressão{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.expressao }}</div>
+                <p>{{ descricoes_numerologia[(numerologia.expressao | string)][lang] if descricoes_numerologia and (numerologia.expressao | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Motivation Number{% else %}Número de Motivação{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.motivacao }}</div>
+                <p>{{ descricoes_numerologia[(numerologia.motivacao | string)][lang] if descricoes_numerologia and (numerologia.motivacao | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Impression Number{% else %}Número de Impressão{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.impressao }}</div>
+                <p>{{ descricoes_numerologia[(numerologia.impressao | string)][lang] if descricoes_numerologia and (numerologia.impressao | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Psychic Number{% else %}Número Psíquico{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.psiquico }}</div>
+                <p>{{ descricoes_numerologia[(numerologia.psiquico | string)][lang] if descricoes_numerologia and (numerologia.psiquico | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Destiny Number{% else %}Número de Destino{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.destino }}</div>
+                <p>{{ descricoes_numerologia[(numerologia.destino | string)][lang] if descricoes_numerologia and (numerologia.destino | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Mission Number{% else %}Número de Missão{% endif %}</h3>
+                <div class="numero-principal">{{ numerologia.missao }}</div>
+                <p>{% if lang == 'en' %}Synthesis of Expression and Destiny{% else %}Síntese de Expressão e Destino{% endif %}</p>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Life Cycles{% else %}Ciclos de Vida{% endif %}</h3>
+                <ul>
+                    <li>{% if lang == 'en' %}1st: {{ numerologia.ciclo1 }} (Until {{ current_user.birth_date.year + 28 }}){% else %}1º: {{ numerologia.ciclo1 }} (Até {{ current_user.birth_date.year + 28 }}){% endif %}</li>
+                    <li>{% if lang == 'en' %}2nd: {{ numerologia.ciclo2 }} ({{ current_user.birth_date.year + 28 }}-{{ current_user.birth_date.year + 57 }}){% else %}2º: {{ numerologia.ciclo2 }} ({{ current_user.birth_date.year + 28 }}-{{ current_user.birth_date.year + 57 }}){% endif %}</li>
+                    <li>{% if lang == 'en' %}3rd: {{ numerologia.ciclo3 }} ({{ current_user.birth_date.year + 57 }}){% else %}3º: {{ numerologia.ciclo3 }} ({{ current_user.birth_date.year + 57 }}){% endif %}</li>
+                </ul>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Challenges{% else %}Desafios{% endif %}</h3>
+                <ul>
+                    <li>{% if lang == 'en' %}First: {{ numerologia.desafio1 }}{% else %}Primeiro: {{ numerologia.desafio1 }}{% endif %}</li>
+                    <li>{% if lang == 'en' %}Second: {{ numerologia.desafio2 }}{% else %}Segundo: {{ numerologia.desafio2 }}{% endif %}</li>
+                    <li>{% if lang == 'en' %}Principal: {{ numerologia.desafio_principal }}{% else %}Principal: {{ numerologia.desafio_principal }}{% endif %}</li>
+                </ul>
+                <p style="font-size: 0.9em;">{{ descricoes_numerologia[(numerologia.desafio_principal | string)][lang] if descricoes_numerologia and (numerologia.desafio_principal | string) in descricoes_numerologia else '' }}</p>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Karmic Lessons{% else %}Lições Cármicas{% endif %}</h3>
+                <ul>
+                    {% for l in numerologia.licoes_carmicas %}
+                    <li>{{ l }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Hidden Tendencies / Subconscious Response{% else %}Tendências Ocultas / Resposta Subconsciente{% endif %}</h3>
+                <p>{{ numerologia.tendencias_ocultas }} / {{ numerologia.resposta_subconsciente }}</p>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Decisive Moments{% else %}Momentos Decisivos{% endif %}</h3>
+                <ul>
+                    <li>{% if lang == 'en' %}1st: {{ numerologia.momento1 }} ({{ current_user.birth_date.year }}-2030){% else %}1º: {{ numerologia.momento1 }} ({{ current_user.birth_date.year }}-2030){% endif %}</li>
+                    {% if numerologia.momento2 %}<li>{% if lang == 'en' %}2nd: {{ numerologia.momento2 }} (2030-2039){% else %}2º: {{ numerologia.momento2 }} (2030-2039){% endif %}</li>{% endif %}
+                    {% if numerologia.momento3 %}<li>{% if lang == 'en' %}3rd: {{ numerologia.momento3 }} (2039-2048){% else %}3º: {{ numerologia.momento3 }} (2039-2048){% endif %}</li>{% endif %}
+                    {% if numerologia.momento4 %}<li>{% if lang == 'en' %}4th: {{ numerologia.momento4 }} (2048+){% else %}4º: {{ numerologia.momento4 }} (2048+){% endif %}</li>{% endif %}
+                </ul>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Conjugal Harmonies{% else %}Harmonias Conjugais{% endif %}</h3>
+                <ul>
+                    <li>{% if lang == 'en' %}Vibrates with: {{ numerologia.harmonia_vibra_com|join(', ') }}{% else %}Vibra com: {{ numerologia.harmonia_vibra_com|join(', ') }}{% endif %}</li>
+                    <li>{% if lang == 'en' %}Attracts: {{ numerologia.harmonia_atrai|join(', ') }}{% else %}Atrai: {{ numerologia.harmonia_atrai|join(', ') }}{% endif %}</li>
+                    <li>{% if lang == 'en' %}Opposite by: {{ numerologia.harmonia_oposto|join(', ') }}{% else %}Oposto com: {{ numerologia.harmonia_oposto|join(', ') }}{% endif %}</li>
+                    <li>{% if lang == 'en' %}Passive with: {{ numerologia.harmonia_passivo|join(', ') }}{% else %}Passivo com: {{ numerologia.harmonia_passivo|join(', ') }}{% endif %}</li>
+                </ul>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Favorable Days{% else %}Dias Favoráveis{% endif %}</h3>
+                <ul>
+                    {% for d in numerologia.dias_favoraveis %}
+                    <li>{{ d }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="info-item">
+                <h3>{% if lang == 'en' %}Karmic Debts{% else %}Dívidas Cármicas{% endif %}</h3>
+                <ul>
+                    {% if numerologia.dividas_carmicas %}
+                        {% for d in numerologia.dividas_carmicas %}
+                        <li>{{ d }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>{% if lang == 'en' %}None detected{% else %}Nenhuma detectada{% endif %}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Gráfico de Numerologia -->
+        <div id="chart-container-numerology">
+            <canvas id="vibracoesChart"></canvas>
+        </div>
+
+        <!-- Seção do Triângulo Invertido no Final da Página -->
+        {% if numerologia.triangulo_html %}
+        <div class="triangulo-section">
+            <h3>
+                {% if lang == 'en' %}
+                    Inverted Triangle
+                {% else %}
+                    Triângulo Invertido
+                {% endif %}
+            </h3>
+            <div class="triangulo-content">
+                <pre>{{ numerologia.triangulo_html | safe }}</pre>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Nova Seção de Astrologia Védica -->
+    {% if vedica %}
+    <div class="vedica-section">
+        <h2>{% if lang == 'en' %}Vedic Astrology (Lahiri Ayanamsa){% else %}Astrologia Védica (Ayanamsa Lahiri){% endif %}</h2>
+        
+        <!-- Planetas -->
+        <h3>{% if lang == 'en' %}Planets Positions{% else %}Posições dos Planetas{% endif %}</h3>
+        <table class="planetas-table">
+            <tr>
+                <th>{% if lang == 'en' %}Planet{% else %}Planeta{% endif %}</th>
+                <th>{% if lang == 'en' %}Rasi{% else %}Rasi{% endif %}</th>
+                <th>{% if lang == 'en' %}Nakshatra{% else %}Nakshatra{% endif %}</th>
+                <th>{% if lang == 'en' %}House{% else %}Casa{% endif %}</th>
+                <th>{% if lang == 'en' %}Longitude (DMS){% else %}Longitude (GMS){% endif %}</th>
+            </tr>
+            {% for planeta in vedica.planetas %}
+            <tr>
+                <td>{{ planeta.planeta }}</td>
+                <td>{{ planeta.rasi }}</td>
+                <td>{{ planeta.nakshatra }}</td>
+                <td>{{ planeta.casa }}</td>
+                <td>{{ planeta.longitude_grau_minuto_segundo }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Casas -->
+        <h3>{% if lang == 'en' %}Houses{% else %}Casas{% endif %}</h3>
+        <table class="casas-table">
+            <tr>
+                <th>{% if lang == 'en' %}House{% else %}Casa{% endif %}</th>
+                <th>{% if lang == 'en' %}Rasi{% else %}Rasi{% endif %}</th>
+                <th>{% if lang == 'en' %}Nakshatra{% else %}Nakshatra{% endif %}</th>
+                <th>{% if lang == 'en' %}Longitude (DMS){% else %}Longitude (GMS){% endif %}</th>
+            </tr>
+            {% for casa in vedica.casas %}
+            <tr>
+                <td>{{ casa.casa }}</td>
+                <td>{{ casa.rasi }}</td>
+                <td>{{ casa.nakshatra }}</td>
+                <td>{{ casa.longitude_grau_minuto_segundo }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Vimshottari Dasha -->
+        {% if vedica.vimshottari %}
+        <h3>{% if lang == 'en' %}Vimshottari Dasha{% else %}Vimshottari Dasha{% endif %}</h3>
+        <div class="vimshottari-section">
+            {% if vedica.vimshottari.dasha_atual %}
+            <div class="dasha-item">
+                <strong>{% if lang == 'en' %}Current Dasha{% else %}Dasha Atual{% endif %}:</strong> {{ vedica.vimshottari.dasha_atual.planeta }} ({{ vedica.vimshottari.dasha_atual.inicio }} - {{ vedica.vimshottari.dasha_atual.fim }})
+                <ul>
+                    {% for bhukti in vedica.vimshottari.dasha_atual.bhuktis %}
+                    <li>{{ bhukti.planeta }} ({{ bhukti.inicio }} - {{ bhukti.fim }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <strong>{% if lang == 'en' %}Next Dashas{% else %}Próximas Dashas{% endif %}:</strong>
+            <ul>
+                {% for dasha in vedica.vimshottari.proximos_dashas %}
+                <li>{{ dasha.planeta }} ({{ dasha.inicio }} - {{ dasha.fim }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <button id="muteBtn" onclick="toggleMute()">🔊</button>
+    <script>
+        const arquetiposFull = {{ arquetipos_full | tojson | safe }};
+        
+        particlesJS('particles-js', {
+            particles: { number: { value: 40 }, color: { value: ['#d4af37', '#4b0082'] }, shape: { type: 'circle' }, opacity: { value: 0.3 }, size: { value: 4 }, move: { enable: true, speed: 0.4, direction: 'none', random: true } },
+            interactivity: { events: { onhover: { enable: true, mode: 'bubble' } } },
+            retina_detect: true
+        });
+        gsap.from('.categoria', { duration: 1, y: 60, opacity: 0, stagger: 0.2, ease: 'back.out(1.7)' });
+        gsap.from('.info-item', { duration: 1, y: 60, opacity: 0, stagger: 0.2, ease: 'back.out(1.7)' });
+        gsap.from('.triangulo-section', { duration: 1, y: 60, opacity: 0, ease: 'back.out(1.7)' });
+        gsap.from('.vedica-section', { duration: 1, y: 60, opacity: 0, ease: 'back.out(1.7)' });
+
+        // Gráfico de Arquétipos
+        const labelsArch = [{% for nome_full, score in ranking %}'{{ nome_full.split(" / ")[0 if lang == "pt" else 1] }}', {% endfor %}];
+        const dataArch = [{% for nome_full, score in ranking %}{{ score }}, {% endfor %}];
+
+        const ctxArch = document.getElementById('rankingChart').getContext('2d');
+        new Chart(ctxArch, {
+            type: 'bar',
+            data: {
+                labels: labelsArch,
+                datasets: [{ 
+                    label: '{% if lang == "en" %}Archetypal Influence (%){% else %}Influência Arquetípica (%){% endif %}', 
+                    data: dataArch, 
+                    backgroundColor: ['#28a745', '#ffc107', '#007bff', '#dc3545', '#4b0082'], 
+                    borderColor: '#d4af37', 
+                    borderWidth: 2, 
+                    borderRadius: 6, 
+                    tension: 0.4 
+                }]
+            },
+            options: { 
+                responsive: true, 
+                scales: { 
+                    y: { beginAtZero: true, grid: { color: 'rgba(192,192,192,0.1)' }, ticks: { color: 'var(--silver)' } }, 
+                    x: { ticks: { color: 'var(--silver)' } } 
+                }, 
+                plugins: { 
+                    legend: { labels: { color: 'var(--silver)', font: { family: 'Cinzel' } } },
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                const fullName = Object.keys(arquetiposFull).find(key => 
+                                    key.split(' / ')[0 if lang == "pt" else 1] === context[0].label
+                                );
+                                return arquetiposFull[fullName]?.description[lang] || context[0].label;
+                            }
+                        }
+                    }
+                }, 
+                animation: { duration: 2000, easing: 'easeInOutQuart' } 
+            }
+        });
+        gsap.to('#rankingChart', { duration: 1.5, scale: 1.05, rotation: 0.01, ease: 'elastic.out(1, 0.3)' });
+
+        // Gráfico de Numerologia
+        const labelsNum = ['Motivação', 'Impressão', 'Expressão', 'Psíquico', 'Destino'];
+        const dataNum = [{{ numerologia.motivacao }}, {{ numerologia.impressao }}, {{ numerologia.expressao }}, {{ numerologia.psiquico }}, {{ numerologia.destino }}];
+
+        const ctxNum = document.getElementById('vibracoesChart').getContext('2d');
+        new Chart(ctxNum, {
+            type: 'bar',
+            data: {
+                labels: labelsNum,
+                datasets: [{ 
+                    label: '{% if lang == "en" %}Vibrational Influence{% else %}Influência Vibracional{% endif %}', 
+                    data: dataNum, 
+                    backgroundColor: ['#28a745', '#ffc107', '#007bff', '#dc3545', '#4b0082'], 
+                    borderColor: '#d4af37', 
+                    borderWidth: 2, 
+                    borderRadius: 6, 
+                    tension: 0.4 
+                }]
+            },
+            options: { 
+                responsive: true, 
+                scales: { 
+                    y: { beginAtZero: true, grid: { color: 'rgba(192,192,192,0.1)' }, ticks: { color: 'var(--silver)' } }, 
+                    x: { ticks: { color: 'var(--silver)' } } 
+                }, 
+                plugins: { 
+                    legend: { labels: { color: 'var(--silver)', font: { family: 'Cinzel' } } }
+                }, 
+                animation: { duration: 2000, easing: 'easeInOutQuart' } 
+            }
+        });
+        gsap.to('#vibracoesChart', { duration: 1.5, scale: 1.05, rotation: 0.01, ease: 'elastic.out(1, 0.3)' });
+
+        // JS para sons corrigido
+        let audioUnlocked = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const buttonSound = document.getElementById('buttonSound');
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                bgMusic.volume = 0.2;
+                bgMusic.play().then(() => {
+                    audioUnlocked = true;
+                    console.log('Áudio desbloqueado! Música rodando.');
+                }).catch(e => console.log('Erro no áudio:', e));
+            }
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                unlockAudio();
+                buttonSound.currentTime = 0;
+                buttonSound.volume = 0.5;
+                buttonSound.play().catch(e => console.log('Som de botão bloqueado:', e));
+            }
+        });
+        function toggleMute() {
+            const isMuted = bgMusic.muted;
+            bgMusic.muted = !isMuted;
+            document.getElementById('muteBtn').textContent = isMuted ? '🔊' : '🔇';
+        }
+    </script>
+</body>
+</html>

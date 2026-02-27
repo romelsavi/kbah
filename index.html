@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Decrypt® - Questionnaire</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Áudios locais (MP3) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/bg.mp3') }}" type="audio/mpeg">
+    </audio>
+    <audio id="buttonSound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+    <style>
+        :root { --bg-gradient: linear-gradient(135deg, #000000 0%, #0f0f23 50%, #1a1a2e 100%); --glass-bg: rgba(192, 192, 192, 0.05); --glass-border: rgba(112, 128, 144, 0.3); --blur: blur(10px); --accent-purple: #4b0082; --gold-accent: #d4af37; --silver: #c0c0c0; --shadow-deep: 0 4px 20px rgba(0,0,0,0.6); --verde: #28a745; --amarelo: #ffc107; --azul: #007bff; --vermelho: #dc3545; }
+        body { font-family: 'SF Pro Display', system-ui, sans-serif; background: var(--bg-gradient); min-height: 100vh; margin: 0; padding: 20px; overflow-y: auto; color: var(--silver); display: flex; flex-direction: column; align-items: center; font-size: 16px; position: relative; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; opacity: 0.2; }
+        #mandala { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.6); opacity: 0.05; animation: rotate-mandala 30s linear infinite; z-index: -1; filter: drop-shadow(0 0 10px rgba(212,175,55,0.3)); }
+        @keyframes rotate-mandala { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.6); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.6); } }
+        h1 { text-align: center; color: var(--gold-accent); font-family: 'Cinzel', serif; font-weight: 700; font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 20px rgba(212,175,55,0.5); letter-spacing: 1px; position: relative; z-index: 1; animation: glow 2s ease-in-out infinite alternate; }
+        h1::after { content: '®'; font-size: 0.5em; vertical-align: super; }
+        @keyframes glow { from { text-shadow: 0 0 20px rgba(212,175,55,0.5); } to { text-shadow: 0 0 30px rgba(212,175,55,0.8); } }
+        .progresso { text-align: center; color: rgba(192,192,192,0.8); font-size: 1.1em; margin-bottom: 40px; line-height: 1.5; width: 100%; max-width: 600px; z-index: 1; }
+        .progress-bar { width: 100%; max-width: 400px; height: 6px; background: rgba(192,192,192,0.1); border-radius: 3px; margin: 15px auto; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--verde), var(--amarelo), var(--azul), var(--vermelho)); transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-radius: 3px; box-shadow: 0 0 10px rgba(75,0,130,0.5); }
+        form { max-width: 700px; width: 100%; background: transparent; position: relative; min-width: 400px; z-index: 1; }
+        .pergunta { background: var(--glass-bg); backdrop-filter: var(--blur); border: 1px solid var(--glass-border); border-radius: 12px; padding: 40px; box-shadow: var(--shadow-deep); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); display: none; margin-bottom: 20px; transform: perspective(1000px) rotateY(10deg); opacity: 0; }
+        .pergunta.ativa { display: block !important; opacity: 1; transform: perspective(1000px) rotateY(0deg); }
+        .pergunta strong { color: var(--gold-accent); font-weight: 400; font-size: 1.3em; display: block; margin-bottom: 25px; line-height: 1.5; font-family: 'Cinzel', serif; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        label { display: block; color: rgba(192,192,192,0.9); margin: 15px 0; cursor: pointer; transition: all 0.3s ease; font-size: 1.05em; padding: 10px; border-radius: 8px; }
+        label:hover { color: var(--gold-accent); background: rgba(212,175,55,0.1); transform: translateX(5px); }
+        input[type="radio"], input[type="range"] { margin-right: 12px; accent-color: var(--gold-accent); transform: scale(1.2); }
+        .likert-labels { display: flex; justify-content: space-between; margin-top: 20px; color: rgba(192,192,192,0.6); font-size: 0.95em; }
+        .botoes { display: flex; justify-content: space-between; margin-top: 50px; width: 100%; max-width: 500px; z-index: 1; }
+        button { padding: 18px 35px; background: linear-gradient(135deg, var(--accent-purple), var(--gold-accent)); color: var(--silver); font-family: inherit; font-size: 1.1em; font-weight: 400; border: none; border-radius: 30px; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); box-shadow: 0 4px 15px rgba(75,0,130,0.3); flex: 1; margin: 0 15px; position: relative; overflow: hidden; }
+        button::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+        button:active::after { width: 300px; height: 300px; }
+        button:hover:not(:disabled) { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 25px rgba(212,175,55,0.4); color: white; }
+        button:disabled { opacity: 0.4; cursor: not-allowed; background: rgba(75,0,130,0.3); }
+        #submit-btn { display: none; width: 100%; max-width: 400px; padding: 20px; margin: 40px auto 0; background: linear-gradient(135deg, var(--gold-accent), var(--accent-purple)); font-size: 1.3em; border-radius: 50px; font-family: 'Cinzel', serif; }
+        #submit-btn.ativa { display: block; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.7); } 70% { box-shadow: 0 0 0 20px rgba(212,175,55,0); } 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
+        @media (max-width: 600px) { .botoes { flex-direction: column; } button { margin: 8px 0; } form { min-width: auto; padding: 0 10px; } h1 { font-size: 2em; } .pergunta { padding: 20px; } }
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; width: 50px; height: 50px; color: var(--silver); font-size: 1.5em; cursor: pointer; z-index: 10; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <svg id="mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#ffc107" stroke-width="2" />
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#007bff" stroke-width="2" />
+        <circle cx="100" cy="100" r="50" fill="none" stroke="#dc3545" stroke-width="2" />
+        <path d="M100 10 L100 190 M10 100 L190 100" stroke="#28a745" stroke-width="2" />
+        <polygon points="100,20 120,40 100,60 80,40" fill="#ffc107" opacity="0.5" />
+        <polygon points="100,140 80,160 100,180 120,160" fill="#007bff" opacity="0.5" />
+    </svg>
+    <h1>Self Decrypt®</h1>
+    <div class="progresso">
+        <div>{% if lang == 'en' %}Question{% else %}Pergunta{% endif %} <span id="current-q">1</span> de {{ perguntas|length }}</div>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    <form method="POST" action="/resultado">
+        <input type="hidden" name="lang" value="{{ lang }}">
+        <input type="hidden" name="formato" value="{{ formato }}">
+        {% for p in perguntas %}
+        <div class="pergunta" id="p{{ loop.index }}">
+            {% if p.tipo == 'likert' %}
+                <strong>{{ p.texto }}</strong>
+                <div class="likert-slider">
+                    <input type="range" name="{{ p.id }}" min="1" max="5" value="3" required>
+                    <div class="likert-labels">
+                        <span>{% if lang == 'en' %}1 (Strongly Disagree){% else %}1 (Discordo Totalmente){% endif %}</span>
+                        <span id="value-{{ p.id }}">3</span>
+                        <span>{% if lang == 'en' %}5 (Strongly Agree){% else %}5 (Concordo Totalmente){% endif %}</span>
+                    </div>
+                </div>
+            {% elif p.tipo == 'escolha' %}
+                <strong>{% if p.texto %}{{ p.texto }}{% else %}{% if lang == 'en' %}Choose the option that best represents you.{% else %}Escolha a opção que melhor representa você.{% endif %}{% endif %}</strong>
+                <label><input type="radio" name="{{ p.id }}" value="A" required> A) {{ p.A }}</label>
+                <label><input type="radio" name="{{ p.id }}" value="B" required> B) {{ p.B }}</label>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="botoes">
+            <button type="button" id="prev-btn" disabled>{% if lang == 'en' %}Previous{% else %}Anterior{% endif %}</button>
+            <button type="button" id="next-btn">{% if lang == 'en' %}Next{% else %}Próxima{% endif %}</button>
+        </div>
+        <button type="submit" id="submit-btn">{% if lang == 'en' %}Generate My Self Decrypt®{% else %}Gerar Meu Self Decrypt®{% endif %}</button>
+    </form>
+    <button id="muteBtn" onclick="toggleMute()">🔊</button>
+    <script>
+        // Debug: Log no console pra checar se perguntas carregaram
+        console.log('Debug: Número de perguntas carregadas:', {{ perguntas|length }});
+        if ({{ perguntas|length }} === 0) {
+            console.error('ERRO: Nenhuma pergunta carregada! Verifique app.py e arquetipos.json.');
+            document.querySelector('.progresso').innerHTML += '<p style="color: red;">Erro: Nenhuma pergunta disponível. Recarregue a página.</p>';
+        }
+
+        // ParticlesJS
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: { number: { value: 30 }, color: { value: '#d4af37' }, shape: { type: 'star' }, opacity: { value: 0.4, anim: { enable: true, speed: 0.5 } }, size: { value: 2 }, move: { enable: true, speed: 0.3, direction: 'top', random: true, straight: false, out_mode: 'out' } },
+                interactivity: { events: { onhover: { enable: true, mode: 'slow' } } },
+                retina_detect: true
+            });
+        }
+
+        const totalPerguntas = {{ perguntas|length }};
+        let currentIndex = 0;
+        const perguntasEls = document.querySelectorAll('.pergunta');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const currentQ = document.getElementById('current-q');
+        const progressFill = document.getElementById('progress-fill');
+
+        function showPergunta(index) {
+            const ativa = document.querySelector('.pergunta.ativa');
+            if (ativa) {
+                ativa.classList.remove('ativa');
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(ativa, { duration: 0.5, opacity: 0, y: -20, rotationY: -10 });
+                } else {
+                    ativa.style.opacity = 0;
+                    ativa.style.transform = 'perspective(1000px) rotateY(-10deg)';
+                }
+            }
+            const nova = perguntasEls[index];
+            if (nova) {
+                nova.classList.add('ativa');
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(nova, { duration: 0.6, opacity: 1, y: 0, rotationY: 0 });
+                } else {
+                    nova.style.opacity = 1;
+                    nova.style.transform = 'perspective(1000px) rotateY(0deg)';
+                }
+            }
+            currentQ.textContent = index + 1;
+            const percent = ((index + 1) / totalPerguntas) * 100;
+            if (progressFill) progressFill.style.width = percent + '%';
+            prevBtn.disabled = index === 0;
+            if (index === totalPerguntas - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.classList.add('ativa');
+                if (typeof gsap !== 'undefined') gsap.to(submitBtn, { duration: 0.5, scale: 1.1 });
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.classList.remove('ativa');
+                nextBtn.textContent = '{% if lang == "en" %}Next{% else %}Próxima{% endif %}';
+            }
+        }
+
+        function validateCurrent() {
+            const currentPergunta = perguntasEls[currentIndex];
+            if (!currentPergunta) return false;
+            const inputs = currentPergunta.querySelectorAll('input[required]');
+            for (let input of inputs) {
+                if (input.type === 'radio') {
+                    if (!currentPergunta.querySelector('input[type="radio"]:checked')) return false;
+                } else if (!input.value) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            if (validateCurrent()) {
+                if (typeof gsap !== 'undefined') gsap.to(nextBtn, { duration: 0.2, scale: 0.95 });
+                currentIndex++;
+                showPergunta(currentIndex);
+            } else {
+                if (typeof gsap !== 'undefined') gsap.to('.pergunta.ativa', { duration: 0.3, scale: 1.05, yoyo: true, repeat: 1 });
+                alert('{% if lang == "en" %}Please answer the current question before proceeding.{% else %}Por favor, responda a pergunta atual antes de prosseguir.{% endif %}');
+            }
+        });
+
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            if (typeof gsap !== 'undefined') gsap.to(prevBtn, { duration: 0.2, scale: 0.95 });
+            currentIndex--;
+            showPergunta(currentIndex);
+        });
+
+        // Likert sliders
+        document.querySelectorAll('.likert-slider').forEach(slider => {
+            const valueSpan = document.getElementById(`value-${slider.name}`);
+            slider.addEventListener('input', () => {
+                if (valueSpan) valueSpan.textContent = slider.value;
+                if (typeof gsap !== 'undefined') gsap.to(valueSpan, { duration: 0.2, scale: 1.1, yoyo: true, repeat: 1 });
+            });
+        });
+
+        if (totalPerguntas > 0) {
+            showPergunta(0);
+        } else {
+            console.error('Nenhuma pergunta para mostrar!');
+        }
+
+        // JS para sons corrigido
+        let audioUnlocked = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const buttonSound = document.getElementById('buttonSound');
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                bgMusic.volume = 0.2;
+                bgMusic.play().then(() => {
+                    audioUnlocked = true;
+                    console.log('Áudio desbloqueado! Música rodando.');
+                }).catch(e => console.log('Erro no áudio:', e));
+            }
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                unlockAudio();
+                buttonSound.currentTime = 0;
+                buttonSound.volume = 0.5;
+                buttonSound.play().catch(e => console.log('Som de botão bloqueado:', e));
+            }
+        });
+        function toggleMute() {
+            const isMuted = bgMusic.muted;
+            bgMusic.muted = !isMuted;
+            document.getElementById('muteBtn').textContent = isMuted ? '🔊' : '🔇';
+        }
+    </script>
+</body>
+</html>
